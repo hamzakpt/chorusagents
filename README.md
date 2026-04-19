@@ -99,11 +99,11 @@ pip install agentfabric[all]
 
 ### API Keys
 
-AgentFabric uses Claude (Anthropic) by default. Set the key for your chosen provider:
+AgentFabric uses OpenAI by default. Set the key for your chosen provider:
 
 ```bash
+export OPENAI_API_KEY="sk-..."          # OpenAI (default)
 export ANTHROPIC_API_KEY="sk-ant-..."   # Anthropic
-export OPENAI_API_KEY="sk-..."          # OpenAI
 export AZURE_OPENAI_API_KEY="..."       # Azure OpenAI
 export AZURE_OPENAI_ENDPOINT="https://my.openai.azure.com/"
 export GOOGLE_API_KEY="AIza..."         # Google Gemini
@@ -206,8 +206,8 @@ AgentFabric supports every major LLM platform. All providers share the same API 
 
 | Provider | Install extra | Env var | Default model |
 |----------|--------------|---------|---------------|
+| `OpenAIProvider` | _(included)_ | `OPENAI_API_KEY` | `gpt-4o` ✦ default |
 | `AnthropicProvider` | _(included)_ | `ANTHROPIC_API_KEY` | `claude-sonnet-4-6` |
-| `OpenAIProvider` | _(included)_ | `OPENAI_API_KEY` | `gpt-4o` |
 | `AzureOpenAIProvider` | `agentfabric[azure]` | `AZURE_OPENAI_API_KEY` | _(your deployment)_ |
 | `GeminiProvider` | `agentfabric[gemini]` | `GOOGLE_API_KEY` | `gemini-1.5-flash` |
 | `BedrockProvider` | `agentfabric[bedrock]` | AWS credentials | `claude-3-5-sonnet-v2` |
@@ -404,8 +404,8 @@ network.visualize(backend="graphviz", fmt="png", view=True)
 AgentFabric ships with a command-line interface:
 
 ```bash
-# Describe a network (uses ANTHROPIC_API_KEY by default)
-agentfabric create "High School Operations"
+# Describe a network (uses OPENAI_API_KEY by default)
+agentfabric create "High School Operations" --api-key sk-...
 
 # Create with Mermaid visualization
 agentfabric create "Hospital" --visualize mermaid
