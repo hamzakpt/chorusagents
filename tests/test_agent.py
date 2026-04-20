@@ -1,7 +1,7 @@
 """Tests for the Agent class."""
 
 import pytest
-from agentfabric.core.agent import Agent, AgentRole, AgentMessage, AgentResponse
+from chorusagents.core.agent import Agent, AgentRole, AgentMessage, AgentResponse
 from tests.conftest import MockLLMProvider
 
 

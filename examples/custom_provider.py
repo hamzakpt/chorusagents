@@ -2,11 +2,11 @@
 Example: Custom LLM Provider
 
 Shows how to plug in any LLM by subclassing LLMProvider,
-then passing the instance to AgentFabric.
+then passing the instance to ChorusAgents.
 """
 
 import asyncio
-from agentfabric import AgentFabric, LLMProvider
+from chorusagents import ChorusAgents, LLMProvider
 
 
 class MockProvider(LLMProvider):
@@ -28,8 +28,8 @@ async def main():
     # Initialize your custom provider
     provider = MockProvider()
 
-    # Pass it to AgentFabric
-    fabric = AgentFabric(provider)
+    # Pass it to ChorusAgents
+    fabric = ChorusAgents(provider)
 
     # Synthesize and query — same API as any real provider
     network = await fabric.create_async("Software Engineering Team")

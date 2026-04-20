@@ -6,8 +6,8 @@ Requires OPENAI_API_KEY in your environment.
 """
 
 import os
-from agentfabric import AgentFabric
-from agentfabric.providers import OpenAIProvider
+from chorusagents import ChorusAgents
+from chorusagents.providers import OpenAIProvider
 
 
 def main():
@@ -17,8 +17,8 @@ def main():
         model="gpt-4o",
     )
 
-    # 2. Initialize AgentFabric with that provider
-    fabric = AgentFabric(provider)
+    # 2. Initialize ChorusAgents with that provider
+    fabric = ChorusAgents(provider)
 
     # 3. Synthesize a network
     print("Synthesizing Criminal Defense Law Firm network...")

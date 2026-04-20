@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_API_VERSION = "2024-02-01"
 DEFAULT_MAX_TOKENS = 4096
@@ -17,7 +17,7 @@ class AzureOpenAIProvider(LLMProvider):
 
     Requires the ``openai`` package::
 
-        pip install agentfabric[azure]
+        pip install chorusagents[azure]
         # or: pip install openai
 
     Parameters
@@ -40,8 +40,8 @@ class AzureOpenAIProvider(LLMProvider):
 
     Example::
 
-        from agentfabric.providers import AzureOpenAIProvider
-        from agentfabric import AgentFabric
+        from chorusagents.providers import AzureOpenAIProvider
+        from chorusagents import ChorusAgents
 
         provider = AzureOpenAIProvider(
             azure_endpoint="https://my-resource.openai.azure.com/",
@@ -49,7 +49,7 @@ class AzureOpenAIProvider(LLMProvider):
             api_key="your-azure-key",
             api_version="2024-02-01",
         )
-        network = AgentFabric.create("Law Firm", provider=provider)
+        network = ChorusAgents.create("Law Firm", provider=provider)
     """
 
     def __init__(
@@ -66,7 +66,7 @@ class AzureOpenAIProvider(LLMProvider):
         except ImportError as e:
             raise ImportError(
                 "AzureOpenAIProvider requires 'openai'. "
-                "Install it with: pip install agentfabric[azure]"
+                "Install it with: pip install chorusagents[azure]"
             ) from e
 
         self._endpoint = azure_endpoint or os.environ.get("AZURE_OPENAI_ENDPOINT", "")

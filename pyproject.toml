@@ -3,12 +3,12 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentfabric"
+name = "chorusagents"
 version = "0.1.0"
 description = "Autonomously synthesize a complete multi-agent network from a single role description"
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "AgentFabric Contributors" }]
+authors = [{ name = "ChorusAgents Contributors" }]
 keywords = ["ai", "agents", "multi-agent", "llm", "orchestration", "automation"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -91,16 +91,16 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/agentfabric"
-Documentation = "https://github.com/yourusername/agentfabric#readme"
-Repository = "https://github.com/yourusername/agentfabric"
-Issues = "https://github.com/yourusername/agentfabric/issues"
+Homepage = "https://github.com/hamzakpt/chorusagents"
+Documentation = "https://github.com/hamzakpt/chorusagents#readme"
+Repository = "https://github.com/hamzakpt/chorusagents"
+Issues = "https://github.com/hamzakpt/chorusagents/issues"
 
 [project.scripts]
-agentfabric = "agentfabric.cli:main"
+chorusagents = "chorusagents.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["agentfabric"]
+packages = ["chorusagents"]
 
 [tool.black]
 line-length = 100

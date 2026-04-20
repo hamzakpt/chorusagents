@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_MODEL = "llama3.1"
 DEFAULT_HOST = "http://localhost:11434"
@@ -25,7 +25,7 @@ class OllamaProvider(LLMProvider):
 
     And the Python client::
 
-        pip install agentfabric[ollama]
+        pip install chorusagents[ollama]
         # or: pip install ollama
 
     Parameters
@@ -38,11 +38,11 @@ class OllamaProvider(LLMProvider):
 
     Example::
 
-        from agentfabric.providers import OllamaProvider
-        from agentfabric import AgentFabric
+        from chorusagents.providers import OllamaProvider
+        from chorusagents import ChorusAgents
 
         provider = OllamaProvider(model="llama3.1")
-        network = AgentFabric.create("Software Team", provider=provider)
+        network = ChorusAgents.create("Software Team", provider=provider)
     """
 
     def __init__(
@@ -56,7 +56,7 @@ class OllamaProvider(LLMProvider):
         except ImportError as e:
             raise ImportError(
                 "OllamaProvider requires the 'ollama' package and a running Ollama server. "
-                "Install with: pip install agentfabric[ollama]\n"
+                "Install with: pip install chorusagents[ollama]\n"
                 "Then start Ollama: ollama serve"
             ) from e
 

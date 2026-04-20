@@ -1,10 +1,10 @@
-"""Integration tests for the AgentFabric top-level API."""
+"""Integration tests for the ChorusAgents top-level API."""
 
 import pytest
 
-from agentfabric import AgentFabric, AgentNetwork
-from agentfabric.fabric import FabricNetwork
-from agentfabric.providers.base import LLMProvider
+from chorusagents import ChorusAgents, AgentNetwork
+from chorusagents.chorus import ChorusNetwork
+from chorusagents.providers.base import LLMProvider
 from tests.conftest import MockLLMProvider, make_blueprint_json
 
 
@@ -17,7 +17,7 @@ def provider():
 
 @pytest.fixture
 def fabric(provider):
-    return AgentFabric(provider)
+    return ChorusAgents(provider)
 
 
 @pytest.fixture
@@ -25,37 +25,37 @@ def fabric_network(fabric):
     return fabric.create("Test Organization")
 
 
-# ── AgentFabric instance construction ────────────────────────────────────────
+# ── ChorusAgents instance construction ────────────────────────────────────────
 
-def test_agentfabric_requires_provider_instance():
+def test_chorusagents_requires_provider_instance():
     with pytest.raises(TypeError, match="LLMProvider"):
-        AgentFabric("openai")   # string not allowed — must be an instance
+        ChorusAgents("openai")   # string not allowed — must be an instance
 
 
-def test_agentfabric_requires_provider_not_plain_object():
+def test_chorusagents_requires_provider_not_plain_object():
     with pytest.raises(TypeError, match="LLMProvider"):
-        AgentFabric(42)
+        ChorusAgents(42)
 
 
-def test_agentfabric_accepts_valid_provider(provider):
-    fabric = AgentFabric(provider)
-    assert isinstance(fabric, AgentFabric)
+def test_chorusagents_accepts_valid_provider(provider):
+    fabric = ChorusAgents(provider)
+    assert isinstance(fabric, ChorusAgents)
 
 
-def test_agentfabric_provider_property(provider):
-    fabric = AgentFabric(provider)
+def test_chorusagents_provider_property(provider):
+    fabric = ChorusAgents(provider)
     assert fabric.provider is provider
 
 
-def test_agentfabric_repr(provider):
-    fabric = AgentFabric(provider)
-    assert "AgentFabric" in repr(fabric)
+def test_chorusagents_repr(provider):
+    fabric = ChorusAgents(provider)
+    assert "ChorusAgents" in repr(fabric)
 
 
 # ── fabric.create() ───────────────────────────────────────────────────────────
 
 def test_create_returns_fabric_network(fabric_network):
-    assert isinstance(fabric_network, FabricNetwork)
+    assert isinstance(fabric_network, ChorusNetwork)
 
 
 def test_create_meta_role(fabric_network):
@@ -71,8 +71,8 @@ def test_create_agent_names(fabric_network):
 
 
 def test_fabric_reuse_for_multiple_networks(provider):
-    """One AgentFabric instance should create multiple independent networks."""
-    fabric = AgentFabric(provider)
+    """One ChorusAgents instance should create multiple independent networks."""
+    fabric = ChorusAgents(provider)
     n1 = fabric.create("Law Firm")
     n2 = fabric.create("Hospital")
     assert n1.meta_role == "Test Organization"  # both come from same mock
@@ -80,7 +80,7 @@ def test_fabric_reuse_for_multiple_networks(provider):
     assert n1 is not n2
 
 
-# ── FabricNetwork inspection ──────────────────────────────────────────────────
+# ── ChorusNetwork inspection ──────────────────────────────────────────────────
 
 def test_fabric_network_describe(fabric_network):
     desc = fabric_network.describe()
@@ -89,7 +89,7 @@ def test_fabric_network_describe(fabric_network):
 
 def test_fabric_network_repr(fabric_network):
     r = repr(fabric_network)
-    assert "FabricNetwork" in r
+    assert "ChorusNetwork" in r
     assert "Test Organization" in r
 
 
@@ -110,7 +110,7 @@ def test_fabric_mermaid_diagram(fabric_network):
 
 
 def test_fabric_topology_property(fabric_network):
-    from agentfabric.core.topology import TopologyType
+    from chorusagents.core.topology import TopologyType
     assert isinstance(fabric_network.topology, TopologyType)
 
 
@@ -131,9 +131,9 @@ def test_fabric_query_broadcast(fabric_network):
 @pytest.mark.asyncio
 async def test_create_async_returns_fabric_network():
     provider = MockLLMProvider(response=make_blueprint_json())
-    fabric = AgentFabric(provider)
+    fabric = ChorusAgents(provider)
     network = await fabric.create_async("Test Organization")
-    assert isinstance(network, FabricNetwork)
+    assert isinstance(network, ChorusNetwork)
     assert len(network.agents) == 3
 
 
@@ -159,6 +159,6 @@ def test_fabric_visualize_unknown_backend_raises(fabric_network):
 # ── Import sanity ─────────────────────────────────────────────────────────────
 
 def test_fabric_importable_from_top_level():
-    from agentfabric import AgentFabric, FabricNetwork
-    assert AgentFabric
-    assert FabricNetwork
+    from chorusagents import ChorusAgents, ChorusNetwork
+    assert ChorusAgents
+    assert ChorusNetwork

@@ -9,10 +9,10 @@ from typing import Any, Awaitable, Callable, Optional
 
 import networkx as nx
 
-from agentfabric.core.agent import Agent, AgentMessage, AgentResponse
-from agentfabric.core.architect import NetworkBlueprint
-from agentfabric.core.topology import TopologyType, TopologyEdge, EdgeDirection
-from agentfabric.utils.logger import get_logger
+from chorusagents.core.agent import Agent, AgentMessage, AgentResponse
+from chorusagents.core.architect import NetworkBlueprint
+from chorusagents.core.topology import TopologyType, TopologyEdge, EdgeDirection
+from chorusagents.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -308,7 +308,7 @@ class NetworkQueryResult:
 
 class AgentNetwork:
     """
-    The live multi-agent network synthesized by AgentFabric.
+    The live multi-agent network synthesized by ChorusAgents.
 
     Holds the agent instances, the communication graph, and the routing
     logic that dispatches a user query to the appropriate agent(s).

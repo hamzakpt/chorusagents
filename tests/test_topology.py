@@ -1,7 +1,7 @@
 """Tests for topology types and edge models."""
 
 import pytest
-from agentfabric.core.topology import TopologyType, TopologyEdge, EdgeDirection
+from chorusagents.core.topology import TopologyType, TopologyEdge, EdgeDirection
 
 
 def test_topology_type_values():

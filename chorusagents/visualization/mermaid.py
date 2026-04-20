@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from agentfabric.core.architect import NetworkBlueprint
-from agentfabric.core.topology import EdgeDirection, TopologyType
+from chorusagents.core.architect import NetworkBlueprint
+from chorusagents.core.topology import EdgeDirection, TopologyType
 
 
 class MermaidRenderer:
     """
-    Renders an AgentFabric NetworkBlueprint as a Mermaid diagram string.
+    Renders an ChorusAgents NetworkBlueprint as a Mermaid diagram string.
 
     The output can be embedded in Markdown, rendered in GitHub,
     or pasted into https://mermaid.live for interactive viewing.

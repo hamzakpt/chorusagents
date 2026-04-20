@@ -1,4 +1,4 @@
-"""Command-line interface for AgentFabric."""
+"""Command-line interface for ChorusAgents."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import argparse
 import sys
 from typing import Any
 
-from agentfabric.providers import SUPPORTED_PROVIDERS, get_provider
+from chorusagents.providers import SUPPORTED_PROVIDERS, get_provider
 
 _PROVIDER_HELP = (
     "LLM provider. Supported: openai (default), anthropic, azure, gemini, "
@@ -32,37 +32,37 @@ def _add_common_provider_args(p: argparse.ArgumentParser) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        prog="agentfabric",
+        prog="chorusagents",
         description="Synthesize a multi-agent network from a single role description.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # OpenAI (default)
-  agentfabric create "Criminal Defense Law Firm" --api-key sk-...
+  chorusagents create "Criminal Defense Law Firm" --api-key sk-...
 
   # Anthropic
-  agentfabric create "Hospital" --provider anthropic --api-key sk-ant-...
+  chorusagents create "Hospital" --provider anthropic --api-key sk-ant-...
 
   # Azure OpenAI
-  agentfabric create "Law Firm" --provider azure \\
+  chorusagents create "Law Firm" --provider azure \\
       --azure-endpoint https://my.openai.azure.com/ \\
       --azure-deployment gpt-4o-prod --api-key <azure-key>
 
   # Google Gemini
-  agentfabric create "Research Lab" --provider gemini --api-key AIza...
+  chorusagents create "Research Lab" --provider gemini --api-key AIza...
 
   # AWS Bedrock (uses ~/.aws credentials)
-  agentfabric create "Healthcare" --provider bedrock --region us-east-1
+  chorusagents create "Healthcare" --provider bedrock --region us-east-1
 
   # Ollama (local, no key needed)
-  agentfabric create "Dev Team" --provider ollama --model llama3.1
+  chorusagents create "Dev Team" --provider ollama --model llama3.1
 
   # HuggingFace
-  agentfabric create "Research" --provider huggingface \\
+  chorusagents create "Research" --provider huggingface \\
       --model meta-llama/Meta-Llama-3.1-8B-Instruct --api-key hf_...
 
   # Query a network
-  agentfabric query "Law Firm" "Draft a motion to suppress evidence." \\
+  chorusagents query "Law Firm" "Draft a motion to suppress evidence." \\
       --api-key sk-... --full-report
 """,
     )
@@ -117,17 +117,17 @@ def _list_providers() -> None:
         ("huggingface",  "HuggingFaceProvider",  "HF_TOKEN",                    "meta-llama/..."),
         ("langchain",    "LangChainProvider",    "(depends on model)",          "any BaseChatModel"),
     ]
-    print("\nSupported AgentFabric Providers\n" + "=" * 62)
+    print("\nSupported ChorusAgents Providers\n" + "=" * 62)
     print(f"{'Shorthand':<14} {'Class':<24} {'Credential':<30} {'Default Model'}")
     print("-" * 92)
     for r in rows:
         print(f"{r[0]:<14} {r[1]:<24} {r[2]:<30} {r[3]}")
     print(
         "\nInstall extras as needed:\n"
-        "  pip install agentfabric[gemini]       # Google Gemini\n"
-        "  pip install agentfabric[bedrock]      # AWS Bedrock\n"
-        "  pip install agentfabric[ollama]       # Ollama local\n"
-        "  pip install agentfabric[huggingface]  # HuggingFace\n"
+        "  pip install chorusagents[gemini]       # Google Gemini\n"
+        "  pip install chorusagents[bedrock]      # AWS Bedrock\n"
+        "  pip install chorusagents[ollama]       # Ollama local\n"
+        "  pip install chorusagents[huggingface]  # HuggingFace\n"
         "  pip install langchain-core langchain-openai  # LangChain\n"
     )
 
@@ -161,7 +161,7 @@ def _run_command(args) -> None:
         def print_success(msg: str) -> None:  # type: ignore[misc]
             print(msg)
 
-    from agentfabric import AgentFabric
+    from chorusagents import ChorusAgents
 
     provider_kwargs = _build_provider_kwargs(args)
 
@@ -172,10 +172,10 @@ def _run_command(args) -> None:
             api_key=getattr(args, "api_key", None),
             **provider_kwargs,
         )
-        fabric = AgentFabric(llm)
+        fabric = ChorusAgents(llm)
     except (ValueError, TypeError) as e:
         print(f"Error: Could not initialize provider — {e}", file=sys.stderr)
-        print("Run 'agentfabric providers' to see all supported providers.", file=sys.stderr)
+        print("Run 'chorusagents providers' to see all supported providers.", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

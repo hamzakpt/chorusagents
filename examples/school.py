@@ -6,17 +6,17 @@ Demonstrates create_async() and query_async().
 
 import asyncio
 import os
-from agentfabric import AgentFabric
-from agentfabric.providers import OpenAIProvider
+from chorusagents import ChorusAgents
+from chorusagents.providers import OpenAIProvider
 
 
 async def main():
-    # Initialize provider and AgentFabric
+    # Initialize provider and ChorusAgents
     provider = OpenAIProvider(
         api_key=os.environ["OPENAI_API_KEY"],
         model="gpt-4o",
     )
-    fabric = AgentFabric(provider)
+    fabric = ChorusAgents(provider)
 
     print("Synthesizing High School Operations network (async)...")
     network = await fabric.create_async("High School Operations")

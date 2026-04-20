@@ -5,8 +5,8 @@ from __future__ import annotations
 import os
 from typing import Optional
 
-from agentfabric.core.architect import NetworkBlueprint
-from agentfabric.core.topology import EdgeDirection, TopologyType
+from chorusagents.core.architect import NetworkBlueprint
+from chorusagents.core.topology import EdgeDirection, TopologyType
 
 _TOPOLOGY_RANKDIR = {
     TopologyType.PIPELINE: "LR",
@@ -24,11 +24,11 @@ _NODE_COLORS = [
 
 class GraphvizRenderer:
     """
-    Renders an AgentFabric NetworkBlueprint using the Graphviz library.
+    Renders an ChorusAgents NetworkBlueprint using the Graphviz library.
 
     Requires the optional ``visualization`` extra::
 
-        pip install agentfabric[visualization]
+        pip install chorusagents[visualization]
 
     Or separately::
 
@@ -152,5 +152,5 @@ class GraphvizRenderer:
         except ImportError as e:
             raise ImportError(
                 "The 'graphviz' package is required for GraphvizRenderer. "
-                "Install it with: pip install agentfabric[visualization]"
+                "Install it with: pip install chorusagents[visualization]"
             ) from e

@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_MODEL = "claude-sonnet-4-6"
 DEFAULT_MAX_TOKENS = 4096
@@ -15,7 +15,7 @@ class AnthropicProvider(LLMProvider):
     """
     LLM provider backed by Anthropic's Claude API.
 
-    Requires the ``anthropic`` package (installed automatically with agentfabric).
+    Requires the ``anthropic`` package (installed automatically with chorusagents).
 
     Parameters
     ----------

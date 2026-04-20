@@ -1,4 +1,4 @@
-"""Logging utilities for AgentFabric."""
+"""Logging utilities for ChorusAgents."""
 
 import logging
 import os
@@ -14,7 +14,7 @@ def configure_logging(
     fmt: str = "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 ) -> None:
     """
-    Configure AgentFabric's logging output.
+    Configure ChorusAgents's logging output.
 
     Parameters
     ----------
@@ -27,4 +27,4 @@ def configure_logging(
     level = level or os.environ.get("AGENTFABRIC_LOG_LEVEL", "WARNING")
     numeric = getattr(logging, level.upper(), logging.WARNING)
     logging.basicConfig(level=numeric, format=fmt)
-    logging.getLogger("agentfabric").setLevel(numeric)
+    logging.getLogger("chorusagents").setLevel(numeric)

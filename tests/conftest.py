@@ -1,11 +1,11 @@
-"""Shared fixtures and mock providers for the AgentFabric test suite."""
+"""Shared fixtures and mock providers for the ChorusAgents test suite."""
 
 import json
 import pytest
 
-from agentfabric.providers.base import LLMProvider
-from agentfabric.core.architect import NetworkBlueprint
-from agentfabric.core.topology import TopologyType, TopologyEdge, EdgeDirection
+from chorusagents.providers.base import LLMProvider
+from chorusagents.core.architect import NetworkBlueprint
+from chorusagents.core.topology import TopologyType, TopologyEdge, EdgeDirection
 
 
 class MockLLMProvider(LLMProvider):
@@ -87,7 +87,7 @@ def architect_provider():
 
 @pytest.fixture
 def sample_blueprint():
-    from agentfabric.core.architect import SubAgentSpec, NetworkBlueprint
+    from chorusagents.core.architect import SubAgentSpec, NetworkBlueprint
     return NetworkBlueprint(
         meta_role="Test Organization",
         topology_type=TopologyType.STAR,

@@ -2,9 +2,9 @@
 
 import pytest
 
-from agentfabric.core.network import AgentNetwork
-from agentfabric.core.factory import AgentFactory
-from agentfabric.core.architect import MetaArchitect
+from chorusagents.core.network import AgentNetwork
+from chorusagents.core.factory import AgentFactory
+from chorusagents.core.architect import MetaArchitect
 from tests.conftest import MockLLMProvider, make_blueprint_json
 
 

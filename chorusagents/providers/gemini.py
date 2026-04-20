@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_MODEL = "gemini-1.5-flash"
 DEFAULT_MAX_TOKENS = 4096
@@ -17,7 +17,7 @@ class GeminiProvider(LLMProvider):
 
     Requires::
 
-        pip install agentfabric[gemini]
+        pip install chorusagents[gemini]
         # or: pip install google-generativeai
 
     Parameters
@@ -34,11 +34,11 @@ class GeminiProvider(LLMProvider):
 
     Example::
 
-        from agentfabric.providers import GeminiProvider
-        from agentfabric import AgentFabric
+        from chorusagents.providers import GeminiProvider
+        from chorusagents import ChorusAgents
 
         provider = GeminiProvider(api_key="AIza...", model="gemini-1.5-pro")
-        network = AgentFabric.create("Research Lab", provider=provider)
+        network = ChorusAgents.create("Research Lab", provider=provider)
     """
 
     def __init__(
@@ -53,7 +53,7 @@ class GeminiProvider(LLMProvider):
         except ImportError as e:
             raise ImportError(
                 "GeminiProvider requires 'google-generativeai'. "
-                "Install it with: pip install agentfabric[gemini]"
+                "Install it with: pip install chorusagents[gemini]"
             ) from e
 
         self._model_name = model or DEFAULT_MODEL

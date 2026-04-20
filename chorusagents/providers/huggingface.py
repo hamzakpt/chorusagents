@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 
@@ -18,7 +18,7 @@ class HuggingFaceProvider(LLMProvider):
 
     Requires::
 
-        pip install agentfabric[huggingface]
+        pip install chorusagents[huggingface]
         # or: pip install huggingface-hub
 
     Parameters
@@ -39,14 +39,14 @@ class HuggingFaceProvider(LLMProvider):
 
     Example::
 
-        from agentfabric.providers import HuggingFaceProvider
-        from agentfabric import AgentFabric
+        from chorusagents.providers import HuggingFaceProvider
+        from chorusagents import ChorusAgents
 
         provider = HuggingFaceProvider(
             model="meta-llama/Meta-Llama-3.1-8B-Instruct",
             api_key="hf_...",
         )
-        network = AgentFabric.create("Research Lab", provider=provider)
+        network = ChorusAgents.create("Research Lab", provider=provider)
     """
 
     def __init__(
@@ -62,7 +62,7 @@ class HuggingFaceProvider(LLMProvider):
         except ImportError as e:
             raise ImportError(
                 "HuggingFaceProvider requires 'huggingface-hub'. "
-                "Install it with: pip install agentfabric[huggingface]"
+                "Install it with: pip install chorusagents[huggingface]"
             ) from e
 
         self._model_name = model or DEFAULT_MODEL

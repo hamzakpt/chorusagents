@@ -2,8 +2,8 @@
 
 import pytest
 
-from agentfabric.visualization.mermaid import MermaidRenderer
-from agentfabric.core.topology import TopologyType
+from chorusagents.visualization.mermaid import MermaidRenderer
+from chorusagents.core.topology import TopologyType
 
 
 def test_mermaid_render_produces_string(sample_blueprint):
@@ -61,7 +61,7 @@ def test_graphviz_import_error_on_missing_package(sample_blueprint, monkeypatch)
 
     monkeypatch.setattr(builtins, "__import__", mock_import)
 
-    from agentfabric.visualization.graphviz import GraphvizRenderer
+    from chorusagents.visualization.graphviz import GraphvizRenderer
     renderer = GraphvizRenderer()
     with pytest.raises(ImportError, match="graphviz"):
         renderer.render(sample_blueprint)

@@ -8,8 +8,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from agentfabric.core.topology import TopologyType, TopologyEdge, EdgeDirection
-from agentfabric.utils.logger import get_logger
+from chorusagents.core.topology import TopologyType, TopologyEdge, EdgeDirection
+from chorusagents.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

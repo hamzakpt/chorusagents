@@ -6,7 +6,7 @@ import json
 import os
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 DEFAULT_MODEL = "anthropic.claude-3-5-sonnet-20241022-v2:0"
 DEFAULT_MAX_TOKENS = 4096
@@ -22,7 +22,7 @@ class BedrockProvider(LLMProvider):
 
     Requires::
 
-        pip install agentfabric[bedrock]
+        pip install chorusagents[bedrock]
         # or: pip install boto3
 
     Authentication uses the standard AWS credential chain:
@@ -48,15 +48,15 @@ class BedrockProvider(LLMProvider):
 
     Example::
 
-        from agentfabric.providers import BedrockProvider
-        from agentfabric import AgentFabric
+        from chorusagents.providers import BedrockProvider
+        from chorusagents import ChorusAgents
 
         # Uses default AWS credentials from environment/profile
         provider = BedrockProvider(
             model_id="anthropic.claude-3-5-sonnet-20241022-v2:0",
             region_name="us-east-1",
         )
-        network = AgentFabric.create("Healthcare Network", provider=provider)
+        network = ChorusAgents.create("Healthcare Network", provider=provider)
     """
 
     def __init__(
@@ -74,7 +74,7 @@ class BedrockProvider(LLMProvider):
         except ImportError as e:
             raise ImportError(
                 "BedrockProvider requires 'boto3'. "
-                "Install it with: pip install agentfabric[bedrock]"
+                "Install it with: pip install chorusagents[bedrock]"
             ) from e
 
         self._model_id = model_id or DEFAULT_MODEL

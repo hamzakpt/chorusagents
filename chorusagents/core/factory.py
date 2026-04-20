@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from agentfabric.core.agent import Agent, AgentRole
-from agentfabric.core.architect import NetworkBlueprint, SubAgentSpec
-from agentfabric.core.topology import EdgeDirection
-from agentfabric.utils.logger import get_logger
+from chorusagents.core.agent import Agent, AgentRole
+from chorusagents.core.architect import NetworkBlueprint, SubAgentSpec
+from chorusagents.core.topology import EdgeDirection
+from chorusagents.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

@@ -1,16 +1,16 @@
 """
-AgentFabric — Autonomously synthesize a multi-agent network from a single role description.
+ChorusAgents — Autonomously synthesize a multi-agent network from a single role description.
 
 Quickstart::
 
-    from agentfabric import AgentFabric
-    from agentfabric.providers import OpenAIProvider
+    from chorusagents import ChorusAgents
+    from chorusagents.providers import OpenAIProvider
 
     # 1. Initialize your LLM provider
     provider = OpenAIProvider(api_key="sk-...", model="gpt-4o")
 
-    # 2. Initialize AgentFabric
-    fabric = AgentFabric(provider)
+    # 2. Initialize ChorusAgents
+    fabric = ChorusAgents(provider)
 
     # 3. Synthesize a network
     network = fabric.create("Criminal Defense Law Firm")
@@ -21,12 +21,12 @@ Quickstart::
     print(result.answer)
 """
 
-from agentfabric.fabric import AgentFabric, FabricNetwork
-from agentfabric.core.agent import Agent
-from agentfabric.core.network import AgentNetwork
-from agentfabric.core.topology import TopologyType
-from agentfabric.providers.base import LLMProvider
-from agentfabric.providers import (
+from chorusagents.chorus import ChorusAgents, ChorusNetwork
+from chorusagents.core.agent import Agent
+from chorusagents.core.network import AgentNetwork
+from chorusagents.core.topology import TopologyType
+from chorusagents.providers.base import LLMProvider
+from chorusagents.providers import (
     AnthropicProvider,
     OpenAIProvider,
     AzureOpenAIProvider,
@@ -40,8 +40,8 @@ from agentfabric.providers import (
 
 __all__ = [
     # Core
-    "AgentFabric",
-    "FabricNetwork",
+    "ChorusAgents",
+    "ChorusNetwork",
     "Agent",
     "AgentNetwork",
     "TopologyType",

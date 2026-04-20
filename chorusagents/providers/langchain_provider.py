@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
+from chorusagents.providers.base import LLMProvider
 
 
 class LangChainProvider(LLMProvider):
@@ -13,7 +13,7 @@ class LangChainProvider(LLMProvider):
 
     This lets you plug in any of the 100+ LLMs supported by LangChain
     (OpenAI, Azure OpenAI, Gemini, Bedrock, Ollama, HuggingFace, Cohere,
-    Mistral, Together AI, etc.) without needing a dedicated AgentFabric provider.
+    Mistral, Together AI, etc.) without needing a dedicated ChorusAgents provider.
 
     Requires ``langchain-core``::
 
@@ -31,10 +31,10 @@ class LangChainProvider(LLMProvider):
 
         # OpenAI via LangChain
         from langchain_openai import ChatOpenAI
-        from agentfabric.providers import LangChainProvider
+        from chorusagents.providers import LangChainProvider
 
         provider = LangChainProvider(ChatOpenAI(model="gpt-4o", api_key="..."))
-        network = AgentFabric.create("Law Firm", provider=provider)
+        network = ChorusAgents.create("Law Firm", provider=provider)
 
         # Azure OpenAI via LangChain
         from langchain_openai import AzureChatOpenAI

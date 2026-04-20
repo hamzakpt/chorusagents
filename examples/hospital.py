@@ -6,8 +6,8 @@ Uses Anthropic Claude — swap to any other provider freely.
 """
 
 import os
-from agentfabric import AgentFabric
-from agentfabric.providers import AnthropicProvider
+from chorusagents import ChorusAgents
+from chorusagents.providers import AnthropicProvider
 
 
 def main():
@@ -17,8 +17,8 @@ def main():
         model="claude-sonnet-4-6",
     )
 
-    # Initialize AgentFabric — reuse for multiple networks
-    fabric = AgentFabric(provider)
+    # Initialize ChorusAgents — reuse for multiple networks
+    fabric = ChorusAgents(provider)
 
     print("Synthesizing Hospital Emergency Department network...")
     network = fabric.create("Hospital Emergency Department")

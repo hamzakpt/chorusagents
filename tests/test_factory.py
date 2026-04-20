@@ -2,10 +2,10 @@
 
 import pytest
 
-from agentfabric.core.factory import AgentFactory
-from agentfabric.core.topology import EdgeDirection
+from chorusagents.core.factory import AgentFactory
+from chorusagents.core.topology import EdgeDirection
 from tests.conftest import MockLLMProvider, make_blueprint_json
-from agentfabric.core.architect import MetaArchitect
+from chorusagents.core.architect import MetaArchitect
 
 
 @pytest.fixture
@@ -39,7 +39,7 @@ def test_factory_wires_bidirectional_neighbors(blueprint):
 
 def test_factory_wires_unidirectional_neighbors():
     import json
-    from agentfabric.core.architect import MetaArchitect
+    from chorusagents.core.architect import MetaArchitect
     data = json.loads(make_blueprint_json())
     data["edges"] = [
         {"source": "Director", "target": "Engineer", "direction": "unidirectional", "label": "tasks"}

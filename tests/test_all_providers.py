@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from agentfabric.providers import (
+from chorusagents.providers import (
     get_provider,
     SUPPORTED_PROVIDERS,
     AnthropicProvider,
@@ -417,7 +417,7 @@ async def test_langchain_provider_passes_system_as_system_message():
 # ── Import sanity check ───────────────────────────────────────────────────────
 
 def test_all_providers_importable_from_top_level():
-    from agentfabric import (
+    from chorusagents import (
         AnthropicProvider,
         OpenAIProvider,
         AzureOpenAIProvider,

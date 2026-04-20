@@ -3,8 +3,8 @@
 import json
 import pytest
 
-from agentfabric.core.architect import MetaArchitect
-from agentfabric.core.topology import TopologyType
+from chorusagents.core.architect import MetaArchitect
+from chorusagents.core.topology import TopologyType
 from tests.conftest import MockLLMProvider, make_blueprint_json
 
 

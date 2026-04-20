@@ -1,9 +1,9 @@
 """
-AgentFabric LLM Providers
+ChorusAgents LLM Providers
 =========================
 
 Provider classes for every major LLM platform. Import the one you need,
-pass it to ``AgentFabric.create()``, and the rest is automatic.
+pass it to ``ChorusAgents.create()``, and the rest is automatic.
 
 Quick reference
 ---------------
@@ -13,64 +13,64 @@ Quick reference
 +======================+=================================+=======================================+
 | AnthropicProvider    | (included)                      | ANTHROPIC_API_KEY                     |
 | OpenAIProvider       | (included)                      | OPENAI_API_KEY                        |
-| AzureOpenAIProvider  | ``pip install agentfabric[azure]``  | AZURE_OPENAI_ENDPOINT, _API_KEY      |
-| GeminiProvider       | ``pip install agentfabric[gemini]`` | GOOGLE_API_KEY                       |
-| BedrockProvider      | ``pip install agentfabric[bedrock]``| AWS_ACCESS_KEY_ID, etc.              |
-| OllamaProvider       | ``pip install agentfabric[ollama]`` | (none — local server)                |
-| HuggingFaceProvider  | ``pip install agentfabric[huggingface]`` | HF_TOKEN                       |
+| AzureOpenAIProvider  | ``pip install chorusagents[azure]``  | AZURE_OPENAI_ENDPOINT, _API_KEY      |
+| GeminiProvider       | ``pip install chorusagents[gemini]`` | GOOGLE_API_KEY                       |
+| BedrockProvider      | ``pip install chorusagents[bedrock]``| AWS_ACCESS_KEY_ID, etc.              |
+| OllamaProvider       | ``pip install chorusagents[ollama]`` | (none — local server)                |
+| HuggingFaceProvider  | ``pip install chorusagents[huggingface]`` | HF_TOKEN                       |
 | LangChainProvider    | ``pip install langchain-core`` + integration | (depends on model)    |
 +----------------------+---------------------------------+---------------------------------------+
 
 Usage::
 
-    from agentfabric.providers import AnthropicProvider
+    from chorusagents.providers import AnthropicProvider
     provider = AnthropicProvider(api_key="sk-ant-...", model="claude-opus-4-7")
 
-    from agentfabric.providers import OpenAIProvider
+    from chorusagents.providers import OpenAIProvider
     provider = OpenAIProvider(api_key="sk-...", model="gpt-4o")
 
-    from agentfabric.providers import AzureOpenAIProvider
+    from chorusagents.providers import AzureOpenAIProvider
     provider = AzureOpenAIProvider(
         azure_endpoint="https://my.openai.azure.com/",
         azure_deployment="gpt-4o",
         api_key="...",
     )
 
-    from agentfabric.providers import GeminiProvider
+    from chorusagents.providers import GeminiProvider
     provider = GeminiProvider(api_key="AIza...", model="gemini-1.5-pro")
 
-    from agentfabric.providers import BedrockProvider
+    from chorusagents.providers import BedrockProvider
     provider = BedrockProvider(model_id="anthropic.claude-3-5-sonnet-20241022-v2:0")
 
-    from agentfabric.providers import OllamaProvider
+    from chorusagents.providers import OllamaProvider
     provider = OllamaProvider(model="llama3.1")   # no API key needed
 
-    from agentfabric.providers import HuggingFaceProvider
+    from chorusagents.providers import HuggingFaceProvider
     provider = HuggingFaceProvider(model="meta-llama/Meta-Llama-3.1-8B-Instruct", api_key="hf_...")
 
     # Any LangChain BaseChatModel
     from langchain_openai import ChatOpenAI
-    from agentfabric.providers import LangChainProvider
+    from chorusagents.providers import LangChainProvider
     provider = LangChainProvider(ChatOpenAI(model="gpt-4o", api_key="..."))
 
     # Then create your network
-    from agentfabric import AgentFabric
-    network = AgentFabric.create("Criminal Defense Law Firm", provider=provider)
+    from chorusagents import ChorusAgents
+    network = ChorusAgents.create("Criminal Defense Law Firm", provider=provider)
 """
 
 from __future__ import annotations
 
 from typing import Any, Optional
 
-from agentfabric.providers.base import LLMProvider
-from agentfabric.providers.anthropic import AnthropicProvider
-from agentfabric.providers.openai import OpenAIProvider
-from agentfabric.providers.azure_openai import AzureOpenAIProvider
-from agentfabric.providers.gemini import GeminiProvider
-from agentfabric.providers.bedrock import BedrockProvider
-from agentfabric.providers.ollama import OllamaProvider
-from agentfabric.providers.huggingface import HuggingFaceProvider
-from agentfabric.providers.langchain_provider import LangChainProvider
+from chorusagents.providers.base import LLMProvider
+from chorusagents.providers.anthropic import AnthropicProvider
+from chorusagents.providers.openai import OpenAIProvider
+from chorusagents.providers.azure_openai import AzureOpenAIProvider
+from chorusagents.providers.gemini import GeminiProvider
+from chorusagents.providers.bedrock import BedrockProvider
+from chorusagents.providers.ollama import OllamaProvider
+from chorusagents.providers.huggingface import HuggingFaceProvider
+from chorusagents.providers.langchain_provider import LangChainProvider
 
 __all__ = [
     "LLMProvider",
@@ -181,7 +181,7 @@ def get_provider(
         f"Unknown provider {provider!r}. "
         f"Supported values: {', '.join(SUPPORTED_PROVIDERS)}.\n"
         "For any other LangChain model, use LangChainProvider directly:\n"
-        "  from agentfabric.providers import LangChainProvider\n"
+        "  from chorusagents.providers import LangChainProvider\n"
         "  from langchain_mistralai import ChatMistralAI\n"
         "  provider = LangChainProvider(ChatMistralAI(api_key='...'))"
     )

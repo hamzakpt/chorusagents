@@ -1,4 +1,4 @@
-"""Individual agent definition within an AgentFabric network."""
+"""Individual agent definition within an ChorusAgents network."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import asyncio
 from typing import Any, Literal, Optional
 from pydantic import BaseModel, Field
 
-from agentfabric.utils.logger import get_logger
+from chorusagents.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -73,7 +73,7 @@ class AgentResponse(BaseModel):
 
 class Agent:
     """
-    A single specialized agent within an AgentFabric network.
+    A single specialized agent within an ChorusAgents network.
 
     Each agent has a defined role, system prompt, and set of responsibilities.
     Agents communicate with each other through the AgentNetwork router.

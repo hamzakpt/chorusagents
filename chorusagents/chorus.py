@@ -1,16 +1,16 @@
 """
-AgentFabric: the top-level public API.
+ChorusAgents: the top-level public API.
 
 Usage::
 
-    from agentfabric import AgentFabric
-    from agentfabric.providers import OpenAIProvider
+    from chorusagents import ChorusAgents
+    from chorusagents.providers import OpenAIProvider
 
     # 1. Initialize your chosen LLM provider
     provider = OpenAIProvider(api_key="sk-...", model="gpt-4o")
 
-    # 2. Initialize AgentFabric with that provider
-    fabric = AgentFabric(provider)
+    # 2. Initialize ChorusAgents with that provider
+    fabric = ChorusAgents(provider)
 
     # 3. Synthesize a network from a role description
     network = fabric.create("Criminal Defense Law Firm")
@@ -26,18 +26,18 @@ from __future__ import annotations
 import asyncio
 from typing import Optional
 
-from agentfabric.core.architect import MetaArchitect, NetworkBlueprint
-from agentfabric.core.factory import AgentFactory
-from agentfabric.core.network import AgentNetwork, HumanInputFn, NetworkQueryResult, QuerySession
-from agentfabric.providers.base import LLMProvider
-from agentfabric.utils.logger import get_logger
+from chorusagents.core.architect import MetaArchitect, NetworkBlueprint
+from chorusagents.core.factory import AgentFactory
+from chorusagents.core.network import AgentNetwork, HumanInputFn, NetworkQueryResult, QuerySession
+from chorusagents.providers.base import LLMProvider
+from chorusagents.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class AgentFabric:
+class ChorusAgents:
     """
-    Initialize AgentFabric with an LLM provider, then synthesize agent networks.
+    Initialize ChorusAgents with an LLM provider, then synthesize agent networks.
 
     The provider is the LLM that powers both the Meta-Architect (role
     decomposition) and every individual agent in the synthesized network.
@@ -53,75 +53,75 @@ class AgentFabric:
     Examples::
 
         # ── OpenAI ──────────────────────────────────────────────────────
-        from agentfabric import AgentFabric
-        from agentfabric.providers import OpenAIProvider
+        from chorusagents import ChorusAgents
+        from chorusagents.providers import OpenAIProvider
 
         provider = OpenAIProvider(api_key="sk-...", model="gpt-4o")
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Criminal Defense Law Firm")
 
         # ── Anthropic / Claude ──────────────────────────────────────────
-        from agentfabric.providers import AnthropicProvider
+        from chorusagents.providers import AnthropicProvider
 
         provider = AnthropicProvider(api_key="sk-ant-...", model="claude-opus-4-7")
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Hospital Emergency Department")
 
         # ── Azure OpenAI ─────────────────────────────────────────────────
-        from agentfabric.providers import AzureOpenAIProvider
+        from chorusagents.providers import AzureOpenAIProvider
 
         provider = AzureOpenAIProvider(
             azure_endpoint="https://my-resource.openai.azure.com/",
             azure_deployment="gpt-4o-prod",
             api_key="...",
         )
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Law Firm")
 
         # ── Google Gemini ────────────────────────────────────────────────
-        from agentfabric.providers import GeminiProvider
+        from chorusagents.providers import GeminiProvider
 
         provider = GeminiProvider(api_key="AIza...", model="gemini-1.5-pro")
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Research Lab")
 
         # ── AWS Bedrock ──────────────────────────────────────────────────
-        from agentfabric.providers import BedrockProvider
+        from chorusagents.providers import BedrockProvider
 
         provider = BedrockProvider(
             model_id="anthropic.claude-3-5-sonnet-20241022-v2:0",
             region_name="us-east-1",
         )
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Healthcare Network")
 
         # ── Ollama (local, no API key) ───────────────────────────────────
-        from agentfabric.providers import OllamaProvider
+        from chorusagents.providers import OllamaProvider
 
         provider = OllamaProvider(model="llama3.1")
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Software Team")
 
         # ── HuggingFace ──────────────────────────────────────────────────
-        from agentfabric.providers import HuggingFaceProvider
+        from chorusagents.providers import HuggingFaceProvider
 
         provider = HuggingFaceProvider(
             model="meta-llama/Meta-Llama-3.1-8B-Instruct",
             api_key="hf_...",
         )
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Research Lab")
 
         # ── Any LangChain BaseChatModel ──────────────────────────────────
         from langchain_mistralai import ChatMistralAI
-        from agentfabric.providers import LangChainProvider
+        from chorusagents.providers import LangChainProvider
 
         provider = LangChainProvider(ChatMistralAI(api_key="..."))
-        fabric = AgentFabric(provider)
+        fabric = ChorusAgents(provider)
         network = fabric.create("Software Team")
 
         # ── Reuse one fabric instance to create multiple networks ─────────
-        fabric = AgentFabric(OpenAIProvider(api_key="sk-..."))
+        fabric = ChorusAgents(OpenAIProvider(api_key="sk-..."))
         law_firm   = fabric.create("Criminal Defense Law Firm")
         hospital   = fabric.create("Hospital Emergency Department")
         school     = fabric.create("High School Operations")
@@ -130,12 +130,12 @@ class AgentFabric:
     def __init__(self, provider: LLMProvider) -> None:
         if not isinstance(provider, LLMProvider):
             raise TypeError(
-                f"AgentFabric expects an initialized LLMProvider instance, "
+                f"ChorusAgents expects an initialized LLMProvider instance, "
                 f"got {type(provider).__name__!r}.\n\n"
                 "Example:\n"
-                "  from agentfabric.providers import OpenAIProvider\n"
+                "  from chorusagents.providers import OpenAIProvider\n"
                 "  provider = OpenAIProvider(api_key='sk-...')\n"
-                "  fabric = AgentFabric(provider)"
+                "  fabric = ChorusAgents(provider)"
             )
         self._provider = provider
         self._architect = MetaArchitect(provider=provider)
@@ -143,14 +143,14 @@ class AgentFabric:
 
     @property
     def provider(self) -> LLMProvider:
-        """The LLM provider powering this AgentFabric instance."""
+        """The LLM provider powering this ChorusAgents instance."""
         return self._provider
 
     # ------------------------------------------------------------------
     # Network synthesis
     # ------------------------------------------------------------------
 
-    def create(self, meta_role: str) -> "FabricNetwork":
+    def create(self, meta_role: str) -> "ChorusNetwork":
         """
         Synthesize a multi-agent network from a role description (synchronous).
 
@@ -163,7 +163,7 @@ class AgentFabric:
 
         Returns
         -------
-        FabricNetwork
+        ChorusNetwork
             The synthesized, ready-to-query agent network.
 
         Raises
@@ -173,7 +173,7 @@ class AgentFabric:
 
         Example::
 
-            fabric = AgentFabric(OpenAIProvider(api_key="sk-..."))
+            fabric = ChorusAgents(OpenAIProvider(api_key="sk-..."))
             network = fabric.create("Criminal Defense Law Firm")
             print(network.describe())
         """
@@ -181,15 +181,15 @@ class AgentFabric:
         blueprint = self._architect.decompose_sync(meta_role)
         agents = self._factory.build(blueprint)
         network = AgentNetwork(blueprint=blueprint, agents=agents, provider=self._provider)
-        return FabricNetwork(network=network, blueprint=blueprint)
+        return ChorusNetwork(network=network, blueprint=blueprint)
 
-    async def create_async(self, meta_role: str) -> "FabricNetwork":
+    async def create_async(self, meta_role: str) -> "ChorusNetwork":
         """
         Async version of :meth:`create`.
 
         Use this inside an ``async`` function or event loop::
 
-            fabric = AgentFabric(OpenAIProvider(api_key="sk-..."))
+            fabric = ChorusAgents(OpenAIProvider(api_key="sk-..."))
             network = await fabric.create_async("Hospital Emergency Department")
             result  = await network.query_async("Patient triage protocol?")
         """
@@ -197,21 +197,21 @@ class AgentFabric:
         blueprint = await self._architect.decompose(meta_role)
         agents = self._factory.build(blueprint)
         network = AgentNetwork(blueprint=blueprint, agents=agents, provider=self._provider)
-        return FabricNetwork(network=network, blueprint=blueprint)
+        return ChorusNetwork(network=network, blueprint=blueprint)
 
     def __repr__(self) -> str:
-        return f"AgentFabric(provider={self._provider!r})"
+        return f"ChorusAgents(provider={self._provider!r})"
 
 
 # ---------------------------------------------------------------------------
-# FabricNetwork — the object returned by fabric.create()
+# ChorusNetwork — the object returned by fabric.create()
 # ---------------------------------------------------------------------------
 
-class FabricNetwork:
+class ChorusNetwork:
     """
     A synthesized, ready-to-use multi-agent network.
 
-    Returned by :meth:`AgentFabric.create`. Holds all instantiated agents
+    Returned by :meth:`ChorusAgents.create`. Holds all instantiated agents
     and exposes methods to query and visualize the network.
     """
 
@@ -325,7 +325,7 @@ class FabricNetwork:
             ``"mermaid"`` — text diagram, no extra deps, paste into
             https://mermaid.live for interactive view.
             ``"graphviz"`` — SVG/PNG/PDF export, requires
-            ``pip install agentfabric[visualization]``.
+            ``pip install chorusagents[visualization]``.
         output_path:
             File to save the diagram. Prints to stdout if omitted (mermaid).
         fmt:
@@ -348,11 +348,11 @@ class FabricNetwork:
 
     def mermaid(self) -> str:
         """Return the Mermaid diagram string directly (no I/O side effects)."""
-        from agentfabric.visualization.mermaid import MermaidRenderer
+        from chorusagents.visualization.mermaid import MermaidRenderer
         return MermaidRenderer().render(self._blueprint)
 
     def _visualize_mermaid(self, output_path: Optional[str]) -> str:
-        from agentfabric.visualization.mermaid import MermaidRenderer
+        from chorusagents.visualization.mermaid import MermaidRenderer
         renderer = MermaidRenderer()
         diagram = renderer.render_to_markdown(self._blueprint)
         if output_path:
@@ -364,7 +364,7 @@ class FabricNetwork:
         return diagram
 
     def _visualize_graphviz(self, output_path: str, fmt: str, view: bool) -> str:
-        from agentfabric.visualization.graphviz import GraphvizRenderer
+        from chorusagents.visualization.graphviz import GraphvizRenderer
         return GraphvizRenderer().render_to_file(
             self._blueprint, output_path, fmt=fmt, view=view
         )
@@ -425,7 +425,7 @@ class FabricNetwork:
 
     def __repr__(self) -> str:
         return (
-            f"FabricNetwork("
+            f"ChorusNetwork("
             f"meta_role={self.meta_role!r}, "
             f"topology={self.topology.value}, "
             f"agents={self.agent_names})"
